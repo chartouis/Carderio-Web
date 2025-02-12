@@ -1,5 +1,6 @@
 import axios from "axios";
 import { FaTrash } from "react-icons/fa";
+import { API_URL } from "../config";
 
 interface props {
   id?: BigInteger;
@@ -13,7 +14,7 @@ interface props {
 export default function DeleteBtn({ id, headers, update }: props) {
   const onDelete = () => {
     axios
-      .delete("https://carderio-api.onrender.com/cards/" + id, { headers })
+      .delete(API_URL+"/cards/" + id, { headers })
       .then((response) => {
         if (response.status === 200){
           update()

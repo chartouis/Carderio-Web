@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import "../styles/Reg.css";
 import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { API_URL } from "../config";
 
 function RegisterForm() {
   const [formData, setFormData] = useState({
@@ -26,7 +27,7 @@ function RegisterForm() {
     e.preventDefault();
 
     axios
-      .post("https://carderio-api.onrender.com/register", formData)
+      .post(API_URL+"/register", formData)
       .then((response) => {
         console.log(response.data);
         if (response.data) {

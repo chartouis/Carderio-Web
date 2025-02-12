@@ -4,6 +4,7 @@ import "../styles/Reg.css";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { API_URL } from "../config";
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ function LoginForm() {
     e.preventDefault();
 
     axios
-      .post("https://carderio-api.onrender.com/login", formData)
+      .post(API_URL+"/login", formData)
       .then((response) => {
         if (response.data) {
           localStorage.setItem("jwt", response.data.token);

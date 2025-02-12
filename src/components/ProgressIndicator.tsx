@@ -1,8 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { DateTime } from "luxon";
+import { API_URL } from "../config";
 
 export default function ProgressIndicator() {
+  const [localDate, setLocalDate] = useState<string>('');
   const [progress, setProgress] = useState({
     learn: 0,
     know: 0,
@@ -12,14 +14,18 @@ export default function ProgressIndicator() {
     update();
   }, []);
 
+  useEffect(() =>{
+    setLocalDate(DateTime.local().toFormat("yyyy-MM-dd'T'HH:mm:ss"));
+  },[])
+
   const update = () => {
     const headers = {
       Authorization: "Bearer " + localStorage.getItem("jwt"),
       "Content-Type": "application/json",
     };
-    const localDateTime = {localDateTime:DateTime.local().toFormat("yyyy-MM-dd'T'HH:mm:ss")};
+    const localDateTime = {localDate};
     axios
-      .post("https://carderio-api.onrender.com/cards/request/progress", localDateTime, {
+      .post(API_URL+"/cards/request/progress", localDateTime, {
         headers,
       })
       .then((response) => {

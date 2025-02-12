@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import "../styles/Create.css"
+import { API_URL } from "../config";
 export default function Create() {
   const [formData, setFormData] = useState({
     front: "",
@@ -27,7 +28,7 @@ export default function Create() {
 
     if (formData.back !== "" || formData.front !== "") {
       axios
-        .post("https://carderio-api.onrender.com/cards", formData, { headers })
+        .post(API_URL+"/cards", formData, { headers })
         .then((response) => {
           if (response.status === 200) {
             setFormData({ front: "", back: "" });

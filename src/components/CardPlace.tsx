@@ -8,6 +8,7 @@ import { DndContext } from "@dnd-kit/core";
 import { DroppableArea } from "./Droppable";
 import DeleteBtn from "./DeleteButton";
 import { DateTime } from "luxon";
+import { API_URL } from "../config";
 
 function Card() {
   const navigate = useNavigate();
@@ -18,11 +19,11 @@ function Card() {
 
   const showCard = () => {
     const localDateTime = {
-      localDateTime: DateTime.local().toFormat("yyyy-MM-dd'T'HH:mm:ss"),
+      localDateTime: localDate,
     };
 
     axios
-      .post("https://carderio-api.onrender.com/cards/request", localDateTime, { headers })
+      .post(API_URL + "/cards/request", localDateTime, { headers })
       .then((res) => {
         if (res.data !== "") {
           setCardData(res.data);
@@ -38,7 +39,7 @@ function Card() {
         }
       });
   };
-
+  const [localDate, setLocalDate] = useState<string>("");
   const [cardData, setCardData] = useState<{
     front?: string;
     back?: string;
@@ -48,6 +49,10 @@ function Card() {
   useEffect(() => {
     showCard();
   }, []);
+
+  useEffect(() => {
+    setLocalDate(DateTime.local().toFormat("yyyy-MM-dd'T'HH:mm:ss"));
+  }, [cardData]);
 
   const remember = () => {
     newCard(true);
@@ -59,7 +64,7 @@ function Card() {
 
   const newCard = (isCorrect: boolean) => {
     const check = { isCorrect: isCorrect, cardId: cardData.id };
-    axios.patch("https://carderio-api.onrender.com/cards/request", check, { headers });
+    axios.patch(API_URL + "/cards/request", check, { headers });
     showCard();
   };
 
