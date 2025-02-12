@@ -19,7 +19,7 @@ export default function ProgressIndicator() {
     };
     const localDateTime = {localDateTime:DateTime.local().toFormat("yyyy-MM-dd'T'HH:mm:ss")};
     axios
-      .post("http://localhost:8080/cards/request/progress", localDateTime, {
+      .post("https://carderio-api.onrender.com/cards/request/progress", localDateTime, {
         headers,
       })
       .then((response) => {

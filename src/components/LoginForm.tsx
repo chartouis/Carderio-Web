@@ -39,7 +39,7 @@ function LoginForm() {
     e.preventDefault();
 
     axios
-      .post("http://localhost:8080/login", formData)
+      .post("https://carderio-api.onrender.com/login", formData)
       .then((response) => {
         if (response.data) {
           localStorage.setItem("jwt", response.data.token);

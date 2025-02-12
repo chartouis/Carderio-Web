@@ -27,7 +27,7 @@ export default function Create() {
 
     if (formData.back !== "" || formData.front !== "") {
       axios
-        .post("http://localhost:8080/cards", formData, { headers })
+        .post("https://carderio-api.onrender.com/cards", formData, { headers })
         .then((response) => {
           if (response.status === 200) {
             setFormData({ front: "", back: "" });

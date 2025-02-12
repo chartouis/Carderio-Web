@@ -26,7 +26,7 @@ function RegisterForm() {
     e.preventDefault();
 
     axios
-      .post("http://localhost:8080/register", formData)
+      .post("https://carderio-api.onrender.com/register", formData)
       .then((response) => {
         console.log(response.data);
         if (response.data) {

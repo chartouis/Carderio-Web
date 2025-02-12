@@ -13,7 +13,7 @@ interface props {
 export default function DeleteBtn({ id, headers, update }: props) {
   const onDelete = () => {
     axios
-      .delete("http://localhost:8080/cards/" + id, { headers })
+      .delete("https://carderio-api.onrender.com/cards/" + id, { headers })
       .then((response) => {
         if (response.status === 200){
           update()

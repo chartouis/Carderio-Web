@@ -22,7 +22,7 @@ function Card() {
     };
 
     axios
-      .post("http://localhost:8080/cards/request", localDateTime, { headers })
+      .post("https://carderio-api.onrender.com/cards/request", localDateTime, { headers })
       .then((res) => {
         if (res.data !== "") {
           setCardData(res.data);
@@ -59,7 +59,7 @@ function Card() {
 
   const newCard = (isCorrect: boolean) => {
     const check = { isCorrect: isCorrect, cardId: cardData.id };
-    axios.patch("http://localhost:8080/cards/request", check, { headers });
+    axios.patch("https://carderio-api.onrender.com/cards/request", check, { headers });
     showCard();
   };
 
