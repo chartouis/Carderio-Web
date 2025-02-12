@@ -1,0 +1,15 @@
+@font-face {
+    font-family: 'Coolvetica';
+    src: url('/src/assets/Coolvetica\ Rg.otf') format('opentype');
+  }
+
+body {
+    overflow: hidden;
+    background-color: #0D1321;
+    color: aliceblue;
+    font-family: 'Coolvetica', sans-serif;
+
+}
+div {
+    background-color: inherit;
+}
