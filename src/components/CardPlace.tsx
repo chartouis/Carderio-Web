@@ -7,7 +7,6 @@ import Flashcard from "./Flashcard";
 import { DndContext } from "@dnd-kit/core";
 import { DroppableArea } from "./Droppable";
 import DeleteBtn from "./DeleteButton";
-import { DateTime } from "luxon";
 import { API_URL } from "../config";
 
 function Card() {
@@ -17,12 +16,13 @@ function Card() {
     "Content-Type": "application/json",
   };
 
-  const showCard = () => {
+  const showCard = async () => {
+    const timestamp = new Date().toISOString();
     const localDateTime = {
-      localDateTime: localDate,
+      localDateTime: timestamp,
     };
 
-    axios
+    await axios
       .post(API_URL + "/cards/request", localDateTime, { headers })
       .then((res) => {
         if (res.data !== "") {
@@ -37,9 +37,10 @@ function Card() {
           console.error;
           navigate("/login"); // Redirect on 401
         }
-      });
+      }).finally(()=>{setRP(false);});
+    
   };
-  const [localDate, setLocalDate] = useState<string>("");
+
   const [cardData, setCardData] = useState<{
     front?: string;
     back?: string;
@@ -50,10 +51,6 @@ function Card() {
     showCard();
   }, []);
 
-  useEffect(() => {
-    setLocalDate(DateTime.local().toFormat("yyyy-MM-dd'T'HH:mm:ss"));
-  }, [cardData]);
-
   const remember = () => {
     newCard(true);
   };
@@ -62,10 +59,36 @@ function Card() {
     newCard(false);
   };
 
-  const newCard = (isCorrect: boolean) => {
-    const check = { isCorrect: isCorrect, cardId: cardData.id };
-    axios.patch(API_URL + "/cards/request", check, { headers });
-    showCard();
+  const [requestPending, setRP] = useState(false);
+
+  const newCard = async (isCorrect: boolean) => {
+    console.log(requestPending);
+    if (!requestPending) {
+      setRP(true);
+      const timestamp = new Date().toISOString();
+      const check = {
+        isCorrect,
+        cardId: cardData.id,
+        localDateTime: timestamp,
+      };
+
+      await axios
+        .patch(API_URL + "/cards/request", check, {
+          headers,
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            showCard();
+          } else {
+            console.error("Request failed with status:", res.status);
+            setRP(false);
+          }
+        })
+        .catch((error) => {
+          console.error("Request error:", error);
+          setRP(false);
+        });
+    }
   };
 
   function handleDragEnd(event: any) {
