@@ -23,7 +23,7 @@ export default function ProgressIndicator() {
       Authorization: "Bearer " + localStorage.getItem("jwt"),
       "Content-Type": "application/json",
     };
-    const localDateTime = {localDate};
+    const localDateTime = {localDateTime : localDate};
     axios
       .post(API_URL+"/cards/request/progress", localDateTime, {
         headers,
