@@ -8,8 +8,10 @@ import { DndContext } from "@dnd-kit/core";
 import { DroppableArea } from "./Droppable";
 import DeleteBtn from "./DeleteButton";
 import { API_URL } from "../config";
+import UseDisableScroll from "../hooks/UseDisableScroll"
 
 function Card() {
+  UseDisableScroll()
   const navigate = useNavigate();
   const headers = {
     Authorization: "Bearer " + localStorage.getItem("jwt"),
