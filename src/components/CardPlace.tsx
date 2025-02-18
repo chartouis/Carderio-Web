@@ -2,21 +2,22 @@ import axios from "axios";
 import { useEffect } from "react";
 import "../styles/Card.css";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Flashcard from "./Flashcard";
 import { DndContext } from "@dnd-kit/core";
 import { DroppableArea } from "./Droppable";
 import DeleteBtn from "./DeleteButton";
 import { API_URL } from "../config";
-import UseDisableScroll from "../hooks/UseDisableScroll"
+import UseDisableScroll from "../hooks/UseDisableScroll";
+import { getHeaders } from "../config";
+import ChangeButton from "./ChangeButton";
+import FlashcardEdit from "./FlashcardEdit";
 
-function Card() {
-  UseDisableScroll()
+export default function Card() {
+  UseDisableScroll();
   const navigate = useNavigate();
-  const headers = {
-    Authorization: "Bearer " + localStorage.getItem("jwt"),
-    "Content-Type": "application/json",
-  };
+  const [searchParams] = useSearchParams();
+  const cardId = searchParams.get("cardId");
 
   const showCard = async () => {
     const timestamp = new Date().toISOString();
@@ -25,7 +26,7 @@ function Card() {
     };
 
     await axios
-      .post(API_URL + "/cards/request", localDateTime, { headers })
+      .post(API_URL + "/cards/request", localDateTime, { headers: getHeaders() })
       .then((res) => {
         if (res.data !== "") {
           setCardData(res.data);
@@ -39,8 +40,10 @@ function Card() {
           console.error;
           navigate("/login"); // Redirect on 401
         }
-      }).finally(()=>{setRP(false);});
-    
+      })
+      .finally(() => {
+        setRP(false);
+      });
   };
 
   const [cardData, setCardData] = useState<{
@@ -53,6 +56,16 @@ function Card() {
     showCard();
   }, []);
 
+  const [isChanging, setIsChanging] = useState(false);
+
+  useEffect(() => {
+    setIsChanging(!isChanging);
+    if(isChanging === false){
+      showCard()
+    }
+    console.log(cardId);
+  }, [cardId]);
+
   const remember = () => {
     newCard(true);
   };
@@ -64,7 +77,7 @@ function Card() {
   const [requestPending, setRP] = useState(false);
 
   const newCard = async (isCorrect: boolean) => {
-    console.log(requestPending);
+    console.log(requestPending); // to delete
     if (!requestPending) {
       setRP(true);
       const timestamp = new Date().toISOString();
@@ -76,7 +89,7 @@ function Card() {
 
       await axios
         .patch(API_URL + "/cards/request", check, {
-          headers,
+          headers: getHeaders(),
         })
         .then((res) => {
           if (res.status === 200) {
@@ -111,10 +124,18 @@ function Card() {
               <DroppableArea id="forgot" text="I Forgot"></DroppableArea>
             </div>
             <div className="col mt-2">
-              <Flashcard
-                front={cardData.front}
-                back={cardData.back}
-              ></Flashcard>
+              {isChanging ? (
+                <Flashcard
+                  front={cardData.front}
+                  back={cardData.back}
+                ></Flashcard>
+              ) : (
+                <FlashcardEdit
+                  front={cardData.front}
+                  back={cardData.back}
+                  id={cardData.id}
+                ></FlashcardEdit>
+              )}
             </div>
             <div className="col mt-2">
               <DroppableArea id="correct" text="I Remember"></DroppableArea>
@@ -123,15 +144,16 @@ function Card() {
         </DndContext>
       </div>
       <br />
-      <div className="d-flex justify-content-center" onClick={showCard}>
-        <DeleteBtn
-          id={cardData.id}
-          headers={headers}
-          update={showCard}
-        ></DeleteBtn>
+      <div className="gap-4 d-flex justify-content-center">
+        <div onClick={showCard}>
+          <DeleteBtn id={cardData.id} update={showCard}></DeleteBtn>
+        </div>
+        <div>
+          <ChangeButton cardData={cardData}></ChangeButton>
+        </div>
       </div>
     </div>
   );
 }
 
-export default Card;
+
