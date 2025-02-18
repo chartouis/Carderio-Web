@@ -28,7 +28,7 @@ export default function Create() {
           setFormData({ front: "", back: "" });
           setStatus("Successfully Created");
         }
-        console.log(response.data);//to delete
+        //console.log(response.data);//to delete
       });
     } else {
       setStatus("Write Something");

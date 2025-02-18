@@ -30,7 +30,7 @@ export default function FlashcardEdit({ front, back, id }: CardProps) {
     await axios
       .patch(API_URL + "/cards", formData, { headers: getHeaders() })
       .then((response) => {
-        console.log(response.data); //todelete
+        //console.log(response.data); //todelete
       })
       .finally(() => {
         navigate("/learn", { replace: true });

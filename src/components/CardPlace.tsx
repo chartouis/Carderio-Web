@@ -77,7 +77,7 @@ export default function Card() {
   const [requestPending, setRP] = useState(false);
 
   const newCard = async (isCorrect: boolean) => {
-    console.log(requestPending); // to delete
+    //console.log(requestPending); // to delete
     if (!requestPending) {
       setRP(true);
       const timestamp = new Date().toISOString();
