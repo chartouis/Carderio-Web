@@ -1,25 +1,20 @@
 import axios from "axios";
 import { FaTrash } from "react-icons/fa";
 import { API_URL } from "../config";
+import { getHeaders } from "../config";
 
 interface props {
   id?: BigInteger;
-  headers: {
-    Authorization: string;
-    "Content-Type": string;
-  };
   update: any;
 }
 
-export default function DeleteBtn({ id, headers, update }: props) {
+export default function DeleteBtn({ id, update }: props) {
   const onDelete = () => {
-    axios
-      .delete(API_URL+"/cards/" + id, { headers })
-      .then((response) => {
-        if (response.status === 200){
-          update()
-        }
-      });
+    axios.delete(API_URL + "/cards/" + id, { headers: getHeaders() }).then((response) => {
+      if (response.status === 200) {
+        update();
+      }
+    });
   };
 
   return (

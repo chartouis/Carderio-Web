@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { API_URL } from "../config";
+import { getHeaders } from "../config";
 
 export default function ProgressIndicator() {
   const [progress, setProgress] = useState({
@@ -13,17 +14,13 @@ export default function ProgressIndicator() {
   }, []);
 
   const update = () => {
-    const headers = {
-      Authorization: "Bearer " + localStorage.getItem("jwt"),
-      "Content-Type": "application/json",
-    };
 
     const timestamp = new Date().toISOString();
     const localDateTime = { localDateTime: timestamp};
     
     axios
       .post(API_URL + "/cards/request/progress", localDateTime, {
-        headers,
+        headers: getHeaders(),
       })
       .then((response) => {
         setProgress(response.data);

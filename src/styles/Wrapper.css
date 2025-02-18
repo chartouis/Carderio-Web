@@ -4,7 +4,7 @@
   }
 
 body {
-    overflow: hidden;
+    overflow-x: hidden;
     background-color: #0D1321;
     color: aliceblue;
     font-family: 'Coolvetica', sans-serif;

@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
-import "../styles/Create.css"
+import "../styles/Create.css";
 import { API_URL } from "../config";
+import { getHeaders } from "../config";
 export default function Create() {
   const [formData, setFormData] = useState({
     front: "",
@@ -21,27 +22,18 @@ export default function Create() {
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const headers = {
-      Authorization: "Bearer " + localStorage.getItem("jwt"),
-      "Content-Type": "application/json",
-    };
-
     if (formData.back !== "" || formData.front !== "") {
-      axios
-        .post(API_URL+"/cards", formData, { headers })
-        .then((response) => {
-          if (response.status === 200) {
-            setFormData({ front: "", back: "" });
-            setStatus("Successfully Created");
-          }
-          console.log(response.data);
-        });
-    }else{
-      setStatus("Write Something")
+      axios.post(API_URL + "/cards", formData, { headers: getHeaders() }).then((response) => {
+        if (response.status === 200) {
+          setFormData({ front: "", back: "" });
+          setStatus("Successfully Created");
+        }
+        console.log(response.data);//to delete
+      });
+    } else {
+      setStatus("Write Something");
     }
   };
-
-  
 
   return (
     <div id="glav" className="p-4 border rounded flex-column">
@@ -68,9 +60,7 @@ export default function Create() {
             id="backinput"
           />
         </div>
-        <span className="text-info">
-          {status}
-        </span>
+        <span className="text-info">{status}</span>
         <br />
         <button type="submit" className="btn btn-outline-primary flex-fill">
           Create

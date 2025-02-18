@@ -5,8 +5,7 @@ interface WrapperProps {
   children: React.ReactNode;
 }
 
-function Wrapper({ children }: WrapperProps) {
+export default function Wrapper({ children }: WrapperProps) {
   return <div>{children}</div>;
 }
 
-export default Wrapper;

@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { API_URL } from "../config";
 
-function RegisterForm() {
+export default function RegisterForm() {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -117,4 +117,4 @@ function RegisterForm() {
   );
 }
 
-export default RegisterForm;
+

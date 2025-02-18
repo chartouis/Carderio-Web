@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-function useDisableScroll(){
+export default function useDisableScroll(){
   useEffect(() => {
     const disableScroll = (e: Event) => e.preventDefault();
     
@@ -13,5 +13,3 @@ function useDisableScroll(){
     };
   }, []);
 };
-
-export default useDisableScroll;

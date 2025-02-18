@@ -12,8 +12,13 @@ export default function Menu() {
   },[])
 
   return (
-    <div>
-      <ProgressIndicator />
+    <div className="overflow-y-auto overflow-x-hidden">
+      <div>
+        <ProgressIndicator />
+      </div>
+      {/* <div>
+        <CardList />
+      </div> */}
     </div>
   );
 }

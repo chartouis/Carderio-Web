@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { API_URL } from "../config";
 
-function LoginForm() {
+export default function LoginForm() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
@@ -102,4 +102,3 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
