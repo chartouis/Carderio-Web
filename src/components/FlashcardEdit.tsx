@@ -29,7 +29,7 @@ export default function FlashcardEdit({ front, back, id }: CardProps) {
     e.preventDefault();
     await axios
       .patch(API_URL + "/cards", formData, { headers: getHeaders() })
-      .then((response) => {
+      .then(() => {
         //console.log(response.data); //todelete
       })
       .finally(() => {
