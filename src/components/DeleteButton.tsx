@@ -4,7 +4,7 @@ import { API_URL } from "../config";
 import { getHeaders } from "../config";
 
 interface props {
-  id?: BigInteger;
+  id?: bigint;
   update: any;
 }
 

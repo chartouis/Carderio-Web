@@ -23,13 +23,15 @@ export default function Create() {
     e.preventDefault();
 
     if (formData.back !== "" || formData.front !== "") {
-      axios.post(API_URL + "/cards", formData, { headers: getHeaders() }).then((response) => {
-        if (response.status === 200) {
-          setFormData({ front: "", back: "" });
-          setStatus("Successfully Created");
-        }
-        //console.log(response.data);//to delete
-      });
+      axios
+        .post(API_URL + "/cards", formData, { headers: getHeaders() })
+        .then((response) => {
+          if (response.status === 200) {
+            setStatus("Successfully Created");
+          }
+          //console.log(response.data);//to delete
+        });
+      setFormData({ front: "", back: "" });
     } else {
       setStatus("Write Something");
     }

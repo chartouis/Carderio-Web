@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 interface CardProps {
   front?: string;
   back?: string;
-  id?: BigInteger;
+  id?: bigint;
 }
 
 export default function FlashcardEdit({ front, back, id }: CardProps) {

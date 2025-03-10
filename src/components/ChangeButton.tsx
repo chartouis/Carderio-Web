@@ -7,7 +7,7 @@ interface props {
   cardData: {
     front?: string;
     back?: string;
-    id?: BigInteger;
+    id?: bigint;
   };
 }
 

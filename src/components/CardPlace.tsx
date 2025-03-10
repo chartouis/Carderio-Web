@@ -17,40 +17,52 @@ export default function Card() {
   UseDisableScroll();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const cardId = searchParams.get("cardId");
-
-  const showCard = async () => {
-    const timestamp = new Date().toISOString();
-    const localDateTime = {
-      localDateTime: timestamp,
-    };
-
-    await axios
-      .post(API_URL + "/cards/request", localDateTime, { headers: getHeaders() })
-      .then((res) => {
-        if (res.data !== "") {
-          setCardData(res.data);
-        } else {
-          navigate("/");
-        }
-      })
-
-      .catch((error) => {
-        if (error.response?.status === 401) {
-          console.error;
-          navigate("/login"); // Redirect on 401
-        }
-      })
-      .finally(() => {
-        setRP(false);
-      });
-  };
+  const [cardList, setCardList] =
+    useState<Array<{ front?: string; back?: string; id: bigint }>>();
 
   const [cardData, setCardData] = useState<{
     front?: string;
     back?: string;
-    id?: BigInteger;
-  }>({});
+    id?: bigint;
+  }>({ front: "", back: "" });
+  const cardId = searchParams.get("cardId");
+
+  const showCard = async () => {
+    const timestamp = new Date().toISOString();
+    const localDateTime = { localDateTime: timestamp };
+
+    if (!cardList) {
+      await axios
+        .post(API_URL + "/cards/request", localDateTime, {
+          headers: getHeaders(),
+        })
+        .then((res) => {
+          if (res.data?.length > 0) {
+            const sortedList = res.data.sort(() => Math.random() - 0.5);
+            setCardList(sortedList);
+            setCardData(sortedList[sortedList.length - 1]);
+          } else {
+            setCardList([]);
+            setCardData({ front: "No cards", back: "Add some!" });
+            navigate("/");
+          }
+        })
+        .catch((error) => {
+          if (error.response?.status === 401) {
+            navigate("/login");
+          }
+        });
+    } else if (cardList.length > 0) {
+      const newCardList = [...cardList];
+      const card = newCardList.pop();
+      if (card) {
+        setCardList(newCardList);
+        setCardData(card);
+      }
+    } else {
+      setCardData({ front: "No cards left", back: "All done!" });
+    }
+  };
 
   useEffect(() => {
     showCard();
@@ -60,10 +72,10 @@ export default function Card() {
 
   useEffect(() => {
     setIsChanging(!isChanging);
-    if(isChanging === false){
-      showCard()
-    }
-    console.log(cardId);
+    // if (isChanging === false) {
+    //   showCard();
+    // }
+    // console.log(cardId);
   }, [cardId]);
 
   const remember = () => {
@@ -74,36 +86,29 @@ export default function Card() {
     newCard(false);
   };
 
-  const [requestPending, setRP] = useState(false);
-
   const newCard = async (isCorrect: boolean) => {
-    //console.log(requestPending); // to delete
-    if (!requestPending) {
-      setRP(true);
-      const timestamp = new Date().toISOString();
-      const check = {
-        isCorrect,
-        cardId: cardData.id,
-        localDateTime: timestamp,
-      };
+    const timestamp = new Date().toISOString();
+    const check = {
+      isCorrect,
+      cardId: cardData.id,
+      localDateTime: timestamp,
+    };
 
-      await axios
-        .patch(API_URL + "/cards/request", check, {
-          headers: getHeaders(),
-        })
-        .then((res) => {
-          if (res.status === 200) {
-            showCard();
-          } else {
-            console.error("Request failed with status:", res.status);
-            setRP(false);
-          }
-        })
-        .catch((error) => {
-          console.error("Request error:", error);
-          setRP(false);
-        });
-    }
+    showCard();
+
+    await axios
+      .patch(API_URL + "/cards/request", check, {
+        headers: getHeaders(),
+      })
+      .then((res) => {
+        if (res.status === 200) {
+        } else {
+          console.error("Request failed with status:", res.status);
+        }
+      })
+      .catch((error) => {
+        console.error("Request error:", error);
+      });
   };
 
   function handleDragEnd(event: any) {
@@ -155,5 +160,3 @@ export default function Card() {
     </div>
   );
 }
-
-

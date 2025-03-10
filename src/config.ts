@@ -1,4 +1,4 @@
-export const API_URL = "https://carderio-api.onrender.com";
+export const API_URL = "http://localhost:8080";
 
 export const getHeaders = () => ({
   Authorization: "Bearer " + localStorage.getItem("jwt"),
