@@ -1,8 +1,7 @@
 import axios from "axios";
-import { useEffect } from "react";
-import "../styles/Card.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import "../styles/Card.css";
 import Flashcard from "./Flashcard";
 import { DndContext } from "@dnd-kit/core";
 import { DroppableArea } from "./Droppable";
@@ -15,11 +14,12 @@ import FlashcardEdit from "./FlashcardEdit";
 
 export default function Card() {
   UseDisableScroll();
+  
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const [cardList, setCardList] =
-    useState<Array<{ front?: string; back?: string; id: bigint }>>();
-
+  const [cardList, setCardList] = useState<
+    Array<{ front?: string; back?: string; id: bigint }>
+  >();
   const [cardData, setCardData] = useState<{
     front?: string;
     back?: string;
@@ -27,38 +27,57 @@ export default function Card() {
   }>({ front: "", back: "" });
   const cardId = searchParams.get("cardId");
 
-  const showCard = async () => {
+  // Shuffle the cards randomly
+  const shuffleCards = (cards : Array<{ front?: string; back?: string; id: bigint }>) => {
+    return cards.sort(() => Math.random() - 0.5);
+  };
+
+  // Display the next card from the list
+  const displayNextCard = (list : Array<{ front?: string; back?: string; id: bigint }>) => {
+    const newCardList = [...list];
+    const card = newCardList.pop();
+    if (card) {
+      setCardList(newCardList);
+      setCardData(card);
+    }
+  };
+
+  // Fetch cards from the API
+  const fetchCards = async () => {
     const timestamp = new Date().toISOString();
     const localDateTime = { localDateTime: timestamp };
+  
+    axios
+      .post(API_URL + "/cards/request", localDateTime, {
+        headers: getHeaders(),
+      })
+      .then((res) => {
+        if (res.data?.length > 0) {
+          const sortedList = shuffleCards(res.data);
+          setCardList(sortedList.slice(0, sortedList.length - 1));
+          displayNextCard(sortedList);
+        } else {
+          setCardList([]);
+          setCardData({ front: "No cards", back: "Add some!" });
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        if (error.response?.status === 401) {
+          navigate("/login");
+        } else {
+          console.error("Request error:", error);
+        }
+      });
+  };
+  
 
+  // Main function to show the next card or fetch new ones
+  const showCard = () => {
     if (!cardList) {
-      await axios
-        .post(API_URL + "/cards/request", localDateTime, {
-          headers: getHeaders(),
-        })
-        .then((res) => {
-          if (res.data?.length > 0) {
-            const sortedList = res.data.sort(() => Math.random() - 0.5);
-            setCardList(sortedList);
-            setCardData(sortedList[sortedList.length - 1]);
-          } else {
-            setCardList([]);
-            setCardData({ front: "No cards", back: "Add some!" });
-            navigate("/");
-          }
-        })
-        .catch((error) => {
-          if (error.response?.status === 401) {
-            navigate("/login");
-          }
-        });
+      fetchCards();
     } else if (cardList.length > 0) {
-      const newCardList = [...cardList];
-      const card = newCardList.pop();
-      if (card) {
-        setCardList(newCardList);
-        setCardData(card);
-      }
+      displayNextCard(cardList);
     } else {
       setCardData({ front: "No cards left", back: "All done!" });
     }
@@ -72,10 +91,9 @@ export default function Card() {
 
   useEffect(() => {
     setIsChanging(!isChanging);
-    // if (isChanging === false) {
-    //   showCard();
-    // }
-    // console.log(cardId);
+    if (!isChanging){
+      fetchCards()
+    }
   }, [cardId]);
 
   const remember = () => {
@@ -86,7 +104,7 @@ export default function Card() {
     newCard(false);
   };
 
-  const newCard = async (isCorrect: boolean) => {
+  const newCard = (isCorrect: boolean) => {
     const timestamp = new Date().toISOString();
     const check = {
       isCorrect,
@@ -96,12 +114,13 @@ export default function Card() {
 
     showCard();
 
-    await axios
+    axios
       .patch(API_URL + "/cards/request", check, {
         headers: getHeaders(),
       })
       .then((res) => {
         if (res.status === 200) {
+          // Handle success if needed
         } else {
           console.error("Request failed with status:", res.status);
         }
@@ -126,24 +145,21 @@ export default function Card() {
         <DndContext onDragEnd={handleDragEnd}>
           <div className="d-flex flex-row gap-5">
             <div className="col mt-2">
-              <DroppableArea id="forgot" text="I Forgot"></DroppableArea>
+              <DroppableArea id="forgot" text="I Forgot" />
             </div>
             <div className="col mt-2">
               {isChanging ? (
-                <Flashcard
-                  front={cardData.front}
-                  back={cardData.back}
-                ></Flashcard>
+                <Flashcard front={cardData.front} back={cardData.back} />
               ) : (
                 <FlashcardEdit
                   front={cardData.front}
                   back={cardData.back}
                   id={cardData.id}
-                ></FlashcardEdit>
+                />
               )}
             </div>
             <div className="col mt-2">
-              <DroppableArea id="correct" text="I Remember"></DroppableArea>
+              <DroppableArea id="correct" text="I Remember" />
             </div>
           </div>
         </DndContext>
@@ -151,10 +167,10 @@ export default function Card() {
       <br />
       <div className="gap-4 d-flex justify-content-center">
         <div onClick={showCard}>
-          <DeleteBtn id={cardData.id} update={showCard}></DeleteBtn>
+          <DeleteBtn id={cardData.id} update={showCard} />
         </div>
         <div>
-          <ChangeButton cardData={cardData}></ChangeButton>
+          <ChangeButton cardData={cardData} />
         </div>
       </div>
     </div>
