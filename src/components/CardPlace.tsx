@@ -14,12 +14,11 @@ import FlashcardEdit from "./FlashcardEdit";
 
 export default function Card() {
   UseDisableScroll();
-  
+
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const [cardList, setCardList] = useState<
-    Array<{ front?: string; back?: string; id: bigint }>
-  >();
+  const [cardList, setCardList] =
+    useState<Array<{ front?: string; back?: string; id: bigint }>>();
   const [cardData, setCardData] = useState<{
     front?: string;
     back?: string;
@@ -28,12 +27,16 @@ export default function Card() {
   const cardId = searchParams.get("cardId");
 
   // Shuffle the cards randomly
-  const shuffleCards = (cards : Array<{ front?: string; back?: string; id: bigint }>) => {
+  const shuffleCards = (
+    cards: Array<{ front?: string; back?: string; id: bigint }>
+  ) => {
     return cards.sort(() => Math.random() - 0.5);
   };
 
   // Display the next card from the list
-  const displayNextCard = (list : Array<{ front?: string; back?: string; id: bigint }>) => {
+  const displayNextCard = (
+    list: Array<{ front?: string; back?: string; id: bigint }>
+  ) => {
     const newCardList = [...list];
     const card = newCardList.pop();
     if (card) {
@@ -46,7 +49,7 @@ export default function Card() {
   const fetchCards = async () => {
     const timestamp = new Date().toISOString();
     const localDateTime = { localDateTime: timestamp };
-  
+
     axios
       .post(API_URL + "/cards/request", localDateTime, {
         headers: getHeaders(),
@@ -70,7 +73,6 @@ export default function Card() {
         }
       });
   };
-  
 
   // Main function to show the next card or fetch new ones
   const showCard = () => {
@@ -88,11 +90,16 @@ export default function Card() {
   }, []);
 
   const [isChanging, setIsChanging] = useState(false);
+  const [justEntered, setJE] = useState(true);
 
   useEffect(() => {
-    setIsChanging(!isChanging);
-    if (!isChanging){
-      fetchCards()
+    if (!justEntered) {
+      setIsChanging(!isChanging);
+      if (!isChanging) {
+        fetchCards();
+      }
+    } else {
+      setJE(false);
     }
   }, [cardId]);
 
@@ -149,13 +156,13 @@ export default function Card() {
             </div>
             <div className="col mt-2">
               {isChanging ? (
-                <Flashcard front={cardData.front} back={cardData.back} />
-              ) : (
                 <FlashcardEdit
                   front={cardData.front}
                   back={cardData.back}
                   id={cardData.id}
                 />
+              ) : (
+                <Flashcard front={cardData.front} back={cardData.back} />
               )}
             </div>
             <div className="col mt-2">
