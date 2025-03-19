@@ -38,36 +38,36 @@ export default function Create() {
   };
 
   return (
-    <div id="glav" className="p-4 border rounded flex-column">
-      <form onSubmit={submit} className="d-flex flex-column">
-        <div className="mb-3">
-          <label className="form-label">Front side</label>
-          <input
-            type="text"
-            className="form-control"
-            onChange={handleChange}
-            value={formData.front}
-            name="front"
-            id="frontinput"
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Back side</label>
-          <input
-            type="text"
-            name="back"
-            onChange={handleChange}
-            value={formData.back}
-            className="form-control"
-            id="backinput"
-          />
-        </div>
-        <span className="text-info">{status}</span>
-        <br />
-        <button type="submit" className="btn btn-outline-primary flex-fill">
-          Create
-        </button>
-      </form>
-    </div>
+    <div id="glav" className="p-4 border rounded flex flex-col">
+    <form onSubmit={submit} className="flex flex-col">
+      <div className="mb-3">
+        <label className="block mb-2">Front side</label>
+        <input
+          type="text"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md"
+          onChange={handleChange}
+          value={formData.front}
+          name="front"
+          id="frontinput"
+        />
+      </div>
+      <div className="mb-3">
+        <label className="block mb-2">Back side</label>
+        <input
+          type="text"
+          name="back"
+          onChange={handleChange}
+          value={formData.back}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md"
+          id="backinput"
+        />
+      </div>
+      <span className="text-cyan-400">{status}</span>
+      <br />
+      <button type="submit" className="bg-transparent border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white py-2 px-4 rounded flex-grow">
+        Create
+      </button>
+    </form>
+  </div>
   );
 }

@@ -23,7 +23,7 @@ export function DroppableArea({ id, text, children }: DroppableAreaProps) {
   return (
     <div ref={setNodeRef} style={style}>
       {children || isOver ? (
-        <div className='text-center text-info align-middle'>
+        <div className='text-center text-cyan-400'>
           <span>{text}</span>
         </div>
       ) : (

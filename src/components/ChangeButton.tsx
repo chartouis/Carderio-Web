@@ -19,7 +19,7 @@ export default function ChangeButton({ cardData }: props) {
       to={switched?`/learn?cardId=${cardData.id}`:"/learn"}
       type="button"
       onClick={()=>{setSwitched(!switched)}}
-      className="btn btn-outline-info"
+      className="border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-white py-2 px-4 rounded"
     >
       <FaEdit size={20} color="#0dcaf0"></FaEdit>
     </Link>

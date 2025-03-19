@@ -40,10 +40,10 @@ export default function Flashcard({ front, back, description }: CardProps) {
         
       >
         <div className="content">
-          <h1 className="display-4 text-light">
+          <h1 className="text-4xl text-white">
             {isFlipped ? front : back}
           </h1>
-          <h3 className="display-6 fs-4 text-light">
+          <h3 className="text-lg text-white">
             {isFlipped ? "" : description}
           </h3>
         </div>

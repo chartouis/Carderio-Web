@@ -57,48 +57,47 @@ export default function LoginForm() {
 
   return (
     <div className="reg">
-      <label className="display-1">Log In</label>
+    <label className="text-6xl">Log In</label>
+    <br />
+    <br />
+    <form className="p-4 border rounded" onSubmit={submit}>
+      <div>
+        <input
+          className="w-full px-3 py-2 border border-gray-300 rounded-md"
+          type="text"
+          name="username"
+          value={formData.username}
+          onChange={handleChange}
+          placeholder="Username"
+          onKeyDown={handleKeyDown}
+        />
+      </div>
       <br />
-      <br />
-      <form className="p-4 border rounded" onSubmit={submit}>
-        <div>
-          <input
-            className="form-control"
-            type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            placeholder="Username"
-            onKeyDown={handleKeyDown}
-          />
-        </div>
+      <div>
+        <input
+          className="w-full px-3 py-2 border border-gray-300 rounded-md"
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          placeholder="Password"
+          onKeyDown={handleKeyDown}
+        />
+      </div>
+      <h6 className="text-red-500 break-words leading-tight">
         <br />
-        <div>
-          <input
-            className="form-control"
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="Password"
-            onKeyDown={handleKeyDown}
-          />
-        </div>
-        <h6 className="text-danger text-break lh-sm">
-          <br />
-          {invalidCreds ? "Invalid Credentials" : ""}
-        </h6>
-        <div id="linkb">
-          <button className="btn btn-outline-primary " type="submit">
-            Log in
-          </button>
-          <Link to="/signup" className="btn btn-outline-secondary">
-            {" "}
-            Sign Up
-          </Link>
-        </div>
-      </form>
-    </div>
+        {invalidCreds ? "Invalid Credentials" : ""}
+      </h6>
+      <div id="linkb">
+        <button className="bg-transparent border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white py-2 px-4 rounded" type="submit">
+          Log in
+        </button>
+        <Link to="/signup" className="bg-transparent border border-gray-500 text-gray-500 hover:bg-gray-500 hover:text-white py-2 px-4 rounded ml-4">
+          Sign Up
+        </Link>
+      </div>
+    </form>
+  </div>
   );
 }
 

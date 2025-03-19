@@ -60,13 +60,13 @@ export default function RegisterForm() {
 
   return (
     <div className="reg">
-      <label className="display-1">Sign Up</label>
+      <label className="text-6xl">Sign Up</label>
       <br />
       <br />
       <form className="p-4 border rounded" onSubmit={submit}>
         <div>
           <input
-            className="form-control"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md"
             type="text"
             name="username"
             value={formData.username}
@@ -78,7 +78,7 @@ export default function RegisterForm() {
         <br />
         <div>
           <input
-            className="form-control"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md"
             type="email"
             name="email"
             value={formData.email}
@@ -90,7 +90,7 @@ export default function RegisterForm() {
         <br />
         <div>
           <input
-            className="form-control"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md"
             type="password"
             name="password"
             value={formData.password}
@@ -99,16 +99,16 @@ export default function RegisterForm() {
             onKeyDown={handleKeyDown}
           />
         </div>
-        <h6 className="text-danger lh-sm text-break">
+        <h6 className="text-red-500 leading-tight break-words">
           <br />
           {invalidCreds ? "This Email or Username is already used" : ""}
         </h6>
 
         <div id="linkb">
-          <button className="btn btn-outline-primary " type="submit">
+          <button className="bg-transparent border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white py-2 px-4 rounded" type="submit">
             Sign Up
           </button>
-          <Link to="/login" className="btn btn-outline-secondary">
+          <Link to="/login" className="bg-transparent border border-gray-500 text-gray-500 hover:bg-gray-500 hover:text-white py-2 px-4 rounded ml-4">
             Login
           </Link>
         </div>

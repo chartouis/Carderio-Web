@@ -147,14 +147,14 @@ export default function Card() {
   }
 
   return (
-    <div className="d-flex flex-column gap-2">
-      <div className="d-flex mt-5">
+    <div className="flex flex-col gap-2">
+      <div className="flex mt-5">
         <DndContext onDragEnd={handleDragEnd}>
-          <div className="d-flex flex-row gap-5">
-            <div className="col mt-2">
+          <div className="flex flex-row gap-5">
+            <div className="mt-2">
               <DroppableArea id="forgot" text="I Forgot" />
             </div>
-            <div className="col mt-2">
+            <div className="mt-2">
               {isChanging ? (
                 <FlashcardEdit
                   front={cardData.front}
@@ -165,14 +165,14 @@ export default function Card() {
                 <Flashcard front={cardData.front} back={cardData.back} />
               )}
             </div>
-            <div className="col mt-2">
+            <div className="mt-2">
               <DroppableArea id="correct" text="I Remember" />
             </div>
           </div>
         </DndContext>
       </div>
       <br />
-      <div className="gap-4 d-flex justify-content-center">
+      <div className="flex gap-4 justify-center">
         <div onClick={showCard}>
           <DeleteBtn id={cardData.id} update={showCard} />
         </div>
