@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import "../styles/Card.css";
 import Flashcard from "./Flashcard";
 import { DndContext } from "@dnd-kit/core";
 import { DroppableArea } from "./Droppable";

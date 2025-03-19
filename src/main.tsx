@@ -14,26 +14,30 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <div>
+      <div className="bg-[#0D1321] min-h-screen">
         <AppNavbar />
-        <Menu />
+        <div className="pt-20">
+          <Menu />
+        </div>
       </div>
     ),
-    errorElement: <h1>Page Not Found 404</h1>,
+    errorElement: <h1 className="text-center text-2xl text-red-500 pt-20">Page Not Found 404</h1>,
   },
   {
     path: "/create",
     element: (
-      <div>
+      <div className="bg-[#0D1321] min-h-screen">
         <AppNavbar />
-        <Create />
+        <div className="pt-20 flex justify-center">
+          <Create />
+        </div>
       </div>
     ),
   },
   {
     path: "/signup",
     element: <RegisterForm />,
-    errorElement: <h1>TI SHO DAUN, SILKA HUINYA</h1>,
+    errorElement: <h1 className="text-center text-2xl text-red-500">Page Not Found 404</h1>,
   },
   {
     path: "/login",
@@ -42,9 +46,11 @@ const router = createBrowserRouter([
   {
     path: "/learn",
     element: (
-      <div>
+      <div className="bg-[#0D1321] min-h-screen">
         <AppNavbar />
-        <Card />
+        <div className="pt-20">
+          <Card />
+        </div>
       </div>
     ),
   },

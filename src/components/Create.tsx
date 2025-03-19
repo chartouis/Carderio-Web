@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useState } from "react";
-import "../styles/Create.css";
 import { API_URL } from "../config";
 import { getHeaders } from "../config";
 export default function Create() {
@@ -38,7 +37,7 @@ export default function Create() {
   };
 
   return (
-    <div id="glav" className="p-4 border rounded flex flex-col">
+    <div className="p-4 border rounded flex flex-col w-2/3 mx-auto">
     <form onSubmit={submit} className="flex flex-col">
       <div className="mb-3">
         <label className="block mb-2">Front side</label>
@@ -64,7 +63,7 @@ export default function Create() {
       </div>
       <span className="text-cyan-400">{status}</span>
       <br />
-      <button type="submit" className="bg-transparent border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white py-2 px-4 rounded flex-grow">
+      <button type="submit" className="bg-transparent border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-white py-2 px-4 rounded flex-grow">
         Create
       </button>
     </form>

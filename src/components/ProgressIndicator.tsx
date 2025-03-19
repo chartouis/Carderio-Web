@@ -27,19 +27,19 @@ export default function ProgressIndicator() {
       });
   };
   return (
-    <div className="row">
-      <div className="m-2 p-5 border rounded border-info col">
-        <span className="text-info row justify-content-center fs-4">
-          {progress.learn}
-        </span>
-        <span className="text-info row fs-4">learn</span>
-      </div>
-      <div className="m-2 p-5 border rounded border-info col">
-        <span className="text-info row justify-content-center fs-4">
-          {progress.know}
-        </span>
-        <span className="text-info row fs-4">know</span>
-      </div>
+    <div className="flex flex-row gap-4">
+    <div className="m-2 p-5 border rounded border-cyan-400 flex-1">
+      <span className="text-cyan-400 flex justify-center text-xl">
+        {progress.learn}
+      </span>
+      <span className="text-cyan-400 text-xl">learn</span>
     </div>
+    <div className="m-2 p-5 border rounded border-cyan-400 flex-1">
+      <span className="text-cyan-400 flex justify-center text-xl">
+        {progress.know}
+      </span>
+      <span className="text-cyan-400 text-xl">know</span>
+    </div>
+  </div>
   );
 }
