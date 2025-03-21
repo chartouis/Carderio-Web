@@ -18,7 +18,7 @@ export default function DeleteBtn({ id, update }: props) {
   };
 
   return (
-    <button onClick={onDelete} type="button" className="border border-white text-white hover:bg-gray-400 hover:text-white py-2 px-4 rounded">
+    <button onClick={onDelete} type="button" className="border bg-[#0D1321] border-white text-white hover:bg-gray-400 hover:text-white py-2 px-4 rounded">
       <div>
         <FaTrash size={20} color="white"></FaTrash>
       </div>

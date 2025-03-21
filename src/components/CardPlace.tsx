@@ -171,12 +171,14 @@ export default function Card() {
         </DndContext>
       </div>
       <br />
-      <div className="flex gap-4 justify-center">
-        <div onClick={showCard}>
-          <DeleteBtn id={cardData.id} update={showCard} />
-        </div>
-        <div>
-          <ChangeButton cardData={cardData} />
+      <div className="absolute bottom-7 left-1/2 right-1/2 z-10">
+        <div className="flex gap-4 justify-center">
+          <div onClick={showCard}>
+            <DeleteBtn id={cardData.id} update={showCard} />
+          </div>
+          <div>
+            <ChangeButton cardData={cardData} />
+          </div>
         </div>
       </div>
     </div>
