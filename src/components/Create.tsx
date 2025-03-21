@@ -37,13 +37,13 @@ export default function Create() {
   };
 
   return (
-    <div className="p-4 border rounded flex flex-col w-2/3 mx-auto">
+    <div className="p-4 top-1.5 border rounded border-cyan-400 flex flex-col max-w-screen mx-auto">
     <form onSubmit={submit} className="flex flex-col">
       <div className="mb-3">
-        <label className="block mb-2">Front side</label>
+        <label className="block mb-2 text-cyan-400">Front side</label>
         <input
           type="text"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md"
+          className="w-full px-3 py-2 border border-cyan-300 text-cyan-400 rounded-md"
           onChange={handleChange}
           value={formData.front}
           name="front"
@@ -51,19 +51,19 @@ export default function Create() {
         />
       </div>
       <div className="mb-3">
-        <label className="block mb-2">Back side</label>
+        <label className="block mb-2 text-cyan-400">Back side</label>
         <input
           type="text"
           name="back"
           onChange={handleChange}
           value={formData.back}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md"
+          className="w-full px-3 py-2 border border-cyan-300 text-cyan-400 rounded-md"
           id="backinput"
         />
       </div>
       <span className="text-cyan-400">{status}</span>
       <br />
-      <button type="submit" className="bg-transparent border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-white py-2 px-4 rounded flex-grow">
+      <button type="submit" className="bg-transparent border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-cyan-800 py-2 px-4 rounded flex-grow">
         Create
       </button>
     </form>

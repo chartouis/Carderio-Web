@@ -7,7 +7,6 @@ import RegisterForm from "./components/RegisterForm.tsx";
 import Card from "./components/CardPlace.tsx";
 import Create from "./components/Create.tsx";
 import AppNavbar from "./components/AppNavBar.tsx";
-import Wrapper from "./components/BgWrap.tsx";
 import Menu from "./components/Menu.tsx";
 
 const router = createBrowserRouter([
@@ -26,9 +25,9 @@ const router = createBrowserRouter([
   {
     path: "/create",
     element: (
-      <div className="bg-[#0D1321] min-h-screen">
+      <div className="bg-[#0D1321] flex min-h-screen items-center justify-center">
         <AppNavbar />
-        <div className="pt-20 flex justify-center">
+        <div className="flex">
           <Create />
         </div>
       </div>
@@ -46,7 +45,7 @@ const router = createBrowserRouter([
   {
     path: "/learn",
     element: (
-      <div className="bg-[#0D1321] min-h-screen">
+      <div className="bg-[#0D1321] min-h-screen min-w-screen">
         <AppNavbar />
         <div className="pt-20">
           <Card />
@@ -58,8 +57,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <Wrapper>
+    
       <RouterProvider router={router} />
-    </Wrapper>
+    
   </StrictMode>
 );

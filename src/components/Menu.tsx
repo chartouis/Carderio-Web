@@ -12,7 +12,7 @@ export default function Menu() {
 
   return (
     <div className="overflow-y-auto overflow-x-hidden max-w-full mx-auto px-4 pt-20">
-      <div>
+      <div className="flex items-center justify-center ">
         <ProgressIndicator />
       </div>
       {/* <div>

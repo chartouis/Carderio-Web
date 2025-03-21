@@ -1,1 +1,14 @@
 @import "tailwindcss";
+
+@theme{
+  --border-cdef:rgb(255,255,255);
+}
+
+body {
+  font-family: "";
+  font-style: normal;
+  font-weight: 800;
+  src: local(""),
+    url("https://fonts.cdnfonts.com/s/107509/Rogan-ExtraBold-BF654c4a9347341.woff")
+      format("woff");
+}

@@ -147,13 +147,13 @@ export default function Card() {
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex mt-5">
+      <div className="flex mt-5 justify-center">
         <DndContext onDragEnd={handleDragEnd}>
-          <div className="flex flex-row gap-5">
+          <div className="flex flex-row gap-5 ">
             <div className="mt-2">
               <DroppableArea id="forgot" text="I Forgot" />
             </div>
-            <div className="mt-2">
+            <div className="flex mt-2 ">
               {isChanging ? (
                 <FlashcardEdit
                   front={cardData.front}
