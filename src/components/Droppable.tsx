@@ -13,7 +13,7 @@ export function DroppableArea({ id, text, children }: DroppableAreaProps) {
 
   // Change style when a draggable is over this droppable area.
   const style = {
-    border: isOver ? "2px dashed #0dcaf0" : "",
+    border: isOver ? "2px dashed white" : "",
     padding: "20px",
     backgroundColor: "#0D1321",
     minWidth: "400px",
@@ -23,7 +23,7 @@ export function DroppableArea({ id, text, children }: DroppableAreaProps) {
   return (
     <div ref={setNodeRef} style={style}>
       {children || isOver ? (
-        <div className='text-center text-cyan-400'>
+        <div className='text-center text-white'>
           <span>{text}</span>
         </div>
       ) : (
