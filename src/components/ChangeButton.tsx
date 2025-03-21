@@ -14,7 +14,7 @@ export default function ChangeButton({ cardData }: props) {
   const [switched, setSwitched] = useState(false);
 
   return (
-    <div className="border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-white py-2 px-4 rounded">
+    <div className="border border-white text-white hover:bg-gray-400 hover:text-white py-2 px-4 rounded">
       <Link
         to={switched ? `/learn?cardId=${cardData.id}` : "/learn"}
         type="button"
@@ -22,7 +22,7 @@ export default function ChangeButton({ cardData }: props) {
           setSwitched(!switched);
         }}
       >
-        <FaEdit size={20} color="#0dcaf0"></FaEdit>
+        <FaEdit size={20} color="white"></FaEdit>
       </Link>
     </div>
   );

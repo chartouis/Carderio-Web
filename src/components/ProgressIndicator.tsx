@@ -28,17 +28,17 @@ export default function ProgressIndicator() {
   };
   return (
     <div className="flex items-center justify-center flex-row gap-4 ">
-    <div className="m-2 p-10 border rounded border-cyan-400 flex-1">
-      <span className="text-cyan-400 flex justify-center text-xl">
+    <div className="m-2 p-10 border rounded border-white flex-1">
+      <span className="text-white flex justify-center text-xl">
         {progress.learn}
       </span>
-      <span className="text-cyan-400 text-xl">learn</span>
+      <span className="text-white text-xl">learn</span>
     </div>
-    <div className="m-2 p-10 border rounded border-cyan-400 flex-1">
-      <span className="text-cyan-400 flex justify-center text-xl">
+    <div className="m-2 p-10 border rounded border-white flex-1">
+      <span className="text-white flex justify-center text-xl">
         {progress.know}
       </span>
-      <span className="text-cyan-400 text-xl">know</span>
+      <span className="text-white text-xl">know</span>
     </div>
   </div>
   );

@@ -36,7 +36,7 @@ export default function Flashcard({ front, back, description }: CardProps) {
         ...style,
         width: "clamp(250px, 90vw, 600px)",
         height: "clamp(330px, 70vh, 680px)",
-        background: "#3E5C76",
+        background: "#e5e7eb",
         borderRadius: "12px",
         overflow: "auto",
         display: "flex",
@@ -50,10 +50,10 @@ export default function Flashcard({ front, back, description }: CardProps) {
       {...attributes}
     >
       <div className="flex flex-col justify-center items-center">
-        <h1 className="text-4xl text-white">
+        <h1 className="text-4xl text-gray-800">
           {isFlipped ? front : back}
         </h1>
-        <h3 className="text-lg text-white">
+        <h3 className="text-lg text-gray-800"> 
           {isFlipped ? "" : description}
         </h3>
       </div>

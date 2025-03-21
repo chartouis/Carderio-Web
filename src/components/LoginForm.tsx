@@ -54,12 +54,12 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen px-4 bg-[#0D1321] text-cyan-400">
+    <div className="flex flex-col items-center justify-center min-h-screen px-4 bg-[#0D1321] text-white">
     <label className="text-6xl mb-8">Log In</label>
     <form className="p-6 border rounded border-white w-full max-w-md" onSubmit={submit}>
       <div className="mb-4">
         <input
-          className="w-full px-3 py-2 border border-white rounded-md placeholder:text-cyan-400"
+          className="w-full px-3 py-2 border border-white rounded-md placeholder:text-white"
           type="text"
           name="username"
           value={formData.username}
@@ -70,7 +70,7 @@ export default function LoginForm() {
       </div>
       <div className="mb-4">
         <input
-          className="w-full px-3 py-2 border border-white rounded-md placeholder:text-cyan-400"
+          className="w-full px-3 py-2 border border-white rounded-md placeholder:text-white"
           type="password"
           name="password"
           value={formData.password}
@@ -83,10 +83,10 @@ export default function LoginForm() {
         {invalidCreds ? "Invalid Credentials" : ""}
       </h6>
       <div className="flex justify-between">
-        <button className="bg-transparent border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-white py-2 px-4 rounded" type="submit">
+        <button className="bg-transparent border border-white text-white hover:bg-white hover:text-gray-800 py-2 px-4 rounded" type="submit">
           Log in
         </button>
-        <Link to="/signup" className="bg-transparent border border-gray-500 text-gray-500 hover:bg-gray-500 hover:text-white py-2 px-4 rounded">
+        <Link to="/signup" className="bg-transparent border border-gray-400 text-gray-400 hover:bg-white hover:text-gray-800 py-2 px-4 rounded">
           Sign Up
         </Link>
       </div>

@@ -37,40 +37,58 @@ export default function FlashcardEdit({ front, back, id }: CardProps) {
   };
 
   return (
-    <div className="mcontainer">
-    <div id="card">
-      <div className="content">
-        <form onSubmit={submit} className="flex flex-col">
-          <div className="mb-3">
-            <label className="block mb-2">Front side</label>
-            <input
-              type="text"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
-              onChange={handleChange}
-              value={formData.front}
-              name="front"
-              id="frontinput"
-            />
-          </div>
-          <div className="mb-3">
-            <label className="block mb-2">Back side</label>
-            <input
-              type="text"
-              name="back"
-              onChange={handleChange}
-              value={formData.back}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
-              id="backinput"
-            />
-          </div>
-          <span className="text-cyan-400"></span>
-          <br />
-          <button type="submit" className="bg-transparent border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white py-2 px-4 rounded flex-grow">
-            Change
-          </button>
-        </form>
+    <div
+      className="mcontainer"
+      style={{
+        width: "clamp(250px, 90vw, 600px)",
+        height: "clamp(330px, 70vh, 680px)",
+        background: "#e5e7eb",
+        borderRadius: "12px",
+        overflow: "auto",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        textAlign: "center",
+        padding: "20px",
+        zIndex: 1,
+      }}
+    >
+      <div id="card">
+        <div className="content">
+          <form onSubmit={submit} className="flex flex-col">
+            <div className="mb-3">
+              <label className="block mb-2">Front side</label>
+              <input
+                type="text"
+                className="w-full px-3 py-2 border border-gray-800 rounded-md"
+                onChange={handleChange}
+                value={formData.front}
+                name="front"
+                id="frontinput"
+              />
+            </div>
+            <div className="mb-3">
+              <label className="block mb-2">Back side</label>
+              <input
+                type="text"
+                name="back"
+                onChange={handleChange}
+                value={formData.back}
+                className="w-full px-3 py-2 border border-gray-800 rounded-md"
+                id="backinput"
+              />
+            </div>
+            <span className="text-cyan-400"></span>
+            <br />
+            <button
+              type="submit"
+              className="bg-transparent border border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white py-2 px-4 rounded flex-grow"
+            >
+              Change
+            </button>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
   );
 }
