@@ -12,6 +12,8 @@ export default function Generate() {
     Array<{ front?: string; back?: string; id?: bigint }>
   >([]);
 
+  const [isGenerating, setGenerating] = useState(false);
+
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setPrompt((prev) => ({
@@ -21,6 +23,7 @@ export default function Generate() {
   };
 
   const onGenerate = () => {
+    setGenerating(true);
     axios
       .post(API_URL + "/cards/m/ai", prompt, { headers: getHeaders() })
       .then((response) => {
@@ -33,13 +36,17 @@ export default function Generate() {
             })
           );
           setCards(newCards);
-          setPrompt({ context: "" });
+          
         }
       })
       .catch((error) => {
         console.error("Error generating cards:", error);
         // Optionally, add more error handling here, like showing a user message
+      })
+      .finally(() => {
+        setGenerating(false);
       });
+      setPrompt({ context: "" });
   };
 
   //   useEffect(() => {
@@ -84,6 +91,7 @@ export default function Generate() {
           <div className="border border-white rounded hover:bg-gray-500 min-w-10 min-h-10 bg-[#0D1321]"></div>
         </button>
       </div>
+      <h2 className="absolute top-1/2 bottom-1/2   text-3xl">{isGenerating?"Generating...":""}</h2>
     </div>
   );
 }
