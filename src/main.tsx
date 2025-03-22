@@ -52,7 +52,7 @@ const router = createBrowserRouter([
   {
     path: "/learn",
     element: (
-      <div className="bg-[#0D1321] min-h-screen min-w-screen">
+      <div className="bg-[#0D1321] h-screen w-screen overflow-hidden">
         <AppNavbar />
         <div className="pt-20">
           <Card />
@@ -63,7 +63,7 @@ const router = createBrowserRouter([
   {
     path: "/create/generate",
     element: (
-      <div className="bg-[#0D1321] min-h-screen">
+      <div className="bg-[#0D1321] min-h-screen ">
         <AppNavbar />
         <div className="pt-20">
           <Generate />

@@ -171,7 +171,7 @@ export default function Card() {
         </DndContext>
       </div>
       <br />
-      <div className="absolute bottom-7 left-1/2 right-1/2 z-10">
+      <div className="absolute bottom-10 left-1/2 right-1/2 z-10">
         <div className="flex gap-4 justify-center">
           <div onClick={showCard}>
             <DeleteBtn id={cardData.id} update={showCard} />

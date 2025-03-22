@@ -1,7 +1,7 @@
 import axios from "axios";
-import { FaArrowAltCircleRight } from "react-icons/fa";
 import { API_URL, getHeaders } from "../config";
 import { useState } from "react";
+import CardListPart from "./CardListPart";
 
 export default function Generate() {
   const [prompt, setPrompt] = useState({
@@ -10,9 +10,9 @@ export default function Generate() {
 
   const [cards, setCards] = useState<
     Array<{ front?: string; back?: string; id?: bigint }>
-  >([{ front: "", back: "" }]);
+  >([]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setPrompt((prev) => ({
       ...prev,
@@ -20,38 +20,68 @@ export default function Generate() {
     }));
   };
 
-  const onGenerate = async () => {
-    await axios
+  const onGenerate = () => {
+    axios
       .post(API_URL + "/cards/m/ai", prompt, { headers: getHeaders() })
       .then((response) => {
-        setPrompt({context:""})
-        console.log(response.data);
-        if (response.status === 200) {
-          setCards(response.data);
+        console.log("Response data:", response.data);
+        if (response.data) {
+          const newCards = response.data.map(
+            (item: { id: any }, index: number) => ({
+              ...item,
+              id: item.id ?? BigInt(index + 1),
+            })
+          );
+          setCards(newCards);
+          setPrompt({ context: "" });
         }
+      })
+      .catch((error) => {
+        console.error("Error generating cards:", error);
+        // Optionally, add more error handling here, like showing a user message
       });
   };
 
+  //   useEffect(() => {
+  //     setCards(addID)
+  //     console.log(cards);
+  //   }, []);
+
+  const handleDelete = (itemToDelete?: bigint) => {
+    console.log(itemToDelete);
+    console.log(cards);
+
+    setCards(cards.filter((card) => card.id !== itemToDelete));
+  };
+
   return (
-    <div className="flex flex-col min-h-screen text-white justify-center items-center gap-7 p-10 pb-48">
-      <div className="w-[80vw] border border-white rounded flex-grow">
+    <div className="flex flex-col min-h-screen text-white justify-center items-center gap-7 p-10 pb-48 overflow-hidden">
+      <div className="w-[80vw] border-b border-t border-b-white rounded flex-grow max-h-[70vh] overflow-auto gap-5">
         {cards?.map((card) => (
-          <div>
-            <span>{card.front}</span>
-            <span> | {card.back}</span>
+          <div
+            className="mt-2"
+            key={card.id}
+            onClick={() => handleDelete(card.id)}
+          >
+            <CardListPart front={card.front} back={card.back} />
           </div>
         ))}
       </div>
 
-      <div className="border border-white">
-        <input
-          className="absolute left-[10vw] bottom-4 w-[70vw] h-12 border border-white rounded bg-[#0D1321] z-10"
+      <div className="border border-white ">
+        <textarea
+          className="absolute left-[10vw] bottom-4 bg-[#0D1321] w-[80vw] max-h-40 border border-white rounded z-10 field-sizing-content"
           onChange={handleChange}
           value={prompt.context}
           name="context"
+          maxLength={2000}
         />
-        <button className="absolute bottom-6 right-[10vw]" onClick={onGenerate}>
-          <FaArrowAltCircleRight size={25}></FaArrowAltCircleRight>
+
+        <button
+          className="absolute bottom-3 right-[9vw] z-10 "
+          onClick={onGenerate}
+        >
+          <div className="border border-white rounded hover:bg-gray-500 min-w-10 min-h-10 bg-[#0D1321]"></div>
         </button>
       </div>
     </div>
