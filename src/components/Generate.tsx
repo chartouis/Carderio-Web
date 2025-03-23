@@ -60,6 +60,7 @@ export default function Generate() {
             })
           );
           setCards(newCards);
+          setEmpty(true)
         }
       })
       .catch((error) => {
