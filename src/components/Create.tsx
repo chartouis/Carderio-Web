@@ -94,7 +94,7 @@ export default function Create() {
           </div>
           <br />
           <div className="">
-            <h4 className="">Generate</h4>
+            <h4 className="">Import</h4>
           </div>
         </Link>
       </div>
