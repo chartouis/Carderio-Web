@@ -49,7 +49,7 @@ export default function Flashcard({ front, back, description }: CardProps) {
       {...listeners}
       {...attributes}
     >
-      <div className="flex flex-col justify-center items-center">
+      <div className="select-none flex flex-col justify-center items-center">
         <h1 className="text-4xl text-gray-800">
           {isFlipped ? front : back}
         </h1>

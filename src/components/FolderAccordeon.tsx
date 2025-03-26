@@ -46,7 +46,7 @@ export default function Accordion({ onElementClick, currentCardFolderId, current
     <div className="">
       <div
         onClick={toggleAccordion}
-        className="flex w-56 items-center border justify-center border-white rounded hover:bg-white text-white  hover:text-gray-800"
+        className="select-none flex w-56 items-center border justify-center border-white rounded hover:bg-white text-white  hover:text-gray-800"
       >
         <span className="text-lg ">Folders</span>
       </div>
@@ -54,7 +54,7 @@ export default function Accordion({ onElementClick, currentCardFolderId, current
       {isExpanded && (
         <div className="mt-2   border-t border-white">
           {folders.map((folder, index) => (
-            <div className="flex justify-between">
+            <div className="select-none flex justify-between">
               <div
                 key={index}
                 className="border border-white rounded w-45 p-1 mb-3 hover:bg-white text-white  hover:text-gray-800 bg-[#0D1321]"
