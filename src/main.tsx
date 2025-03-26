@@ -9,6 +9,7 @@ import Create from "./components/Create.tsx";
 import AppNavbar from "./components/AppNavBar.tsx";
 import Menu from "./components/Menu.tsx";
 import Generate from "./components/Generate.tsx";
+import FolderCreate from "./components/FolderCreate.tsx";
 
 const router = createBrowserRouter([
   {
@@ -67,6 +68,17 @@ const router = createBrowserRouter([
         <AppNavbar />
         <div className="pt-20">
           <Generate />
+        </div>
+      </div>
+    ),
+  },
+  {
+    path: "/create/folders",
+    element: (
+      <div className="bg-[#0D1321] min-h-screen flex items-center justify-center  ">
+        <AppNavbar />
+        <div className="">
+          <FolderCreate />
         </div>
       </div>
     ),

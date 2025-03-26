@@ -10,6 +10,7 @@ import UseDisableScroll from "../hooks/UseDisableScroll";
 import { getHeaders } from "../config";
 import ChangeButton from "./ChangeButton";
 import FlashcardEdit from "./FlashcardEdit";
+import FolderAccordeon from "./FolderAccordeon";
 
 export default function Card() {
   UseDisableScroll();
@@ -22,6 +23,7 @@ export default function Card() {
     front?: string;
     back?: string;
     id?: bigint;
+    folderId?:number;
   }>({ front: "", back: "" });
   const cardId = searchParams.get("cardId");
 
@@ -82,6 +84,34 @@ export default function Card() {
     } else {
       setCardData({ front: "No cards left", back: "All done!" });
     }
+  };
+
+  const cardsFromFolder = (folderId: number) => {
+    const timestamp = new Date().toISOString();
+    const localDateTime = { localDateTime: timestamp };
+
+    axios
+      .post(API_URL + "/folders/" + folderId + "/cards", localDateTime, {
+        headers: getHeaders(),
+      })
+      .then((res) => {
+        if (res.data?.length > 0) {
+          const sortedList = shuffleCards(res.data);
+          setCardList(sortedList.slice(0, sortedList.length - 1));
+          displayNextCard(sortedList);
+        } else {
+          setCardList([]);
+          setCardData({ front: "No cards", back: "Add some!" });
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        if (error.response?.status === 401) {
+          navigate("/login");
+        } else {
+          console.error("Request error:", error);
+        }
+      });
   };
 
   useEffect(() => {
@@ -171,6 +201,7 @@ export default function Card() {
         </DndContext>
       </div>
       <br />
+
       <div className="absolute bottom-10 left-1/2 right-1/2 z-10">
         <div className="flex gap-4 justify-center">
           <div onClick={showCard}>
@@ -179,6 +210,11 @@ export default function Card() {
           <div>
             <ChangeButton cardData={cardData} />
           </div>
+        </div>
+      </div>
+      <div className="absolute top-20 left-1/2 right-1/2 z-10">
+        <div className="flex gap-4 justify-center">
+          <FolderAccordeon displayNextCard={()=>displayNextCard(cardList?cardList:[])} currentCardId={cardData.id} currentCardFolderId={cardData.folderId} onElementClick={cardsFromFolder} />
         </div>
       </div>
     </div>

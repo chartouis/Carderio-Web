@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { API_URL } from "../config";
 import { getHeaders } from "../config";
-import { FaMagic } from "react-icons/fa";
+import { FaFolder, FaMagic } from "react-icons/fa";
 import { Link } from "react-router-dom";
 export default function Create() {
   const [formData, setFormData] = useState({
@@ -97,7 +97,17 @@ export default function Create() {
             <h4 className="">Import</h4>
           </div>
         </Link>
+        <Link to="/create/folders" className="mt-3 flex flex-row gap-2 border border-white rounded w-full py-2 px-6 justify-center text-white hover:bg-white hover:text-gray-800">
+          <div className="-ml-6">
+            <FaFolder color="white" size={20}></FaFolder>
+          </div>
+          <br />
+          <div className="">
+            <h4 className="">Folders</h4>
+          </div>
+        </Link>
       </div>
+      
     </div>
   );
 }

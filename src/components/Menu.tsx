@@ -15,6 +15,7 @@ export default function Menu() {
       <div className="absolute top-2/5 right-1/2 left-1/2">
         <ProgressIndicator />
       </div>
+
       {/* <div>
       <CardList />
     </div> */}
