@@ -13,10 +13,15 @@ interface props {
   onElementClick: (folderId: number) => void;
   currentCardFolderId?: number;
   currentCardId?: bigint;
-  displayNextCard:()=>void;
+  displayNextCard: () => void;
 }
 
-export default function Accordion({ onElementClick, currentCardFolderId, currentCardId, displayNextCard }: props) {
+export default function Accordion({
+  onElementClick,
+  currentCardFolderId,
+  currentCardId,
+  displayNextCard,
+}: props) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [folders, setFolders] = useState<Folder[]>([]);
 
@@ -32,15 +37,13 @@ export default function Accordion({ onElementClick, currentCardFolderId, current
     });
   }, []);
 
-  const addCardintoFolder = (cardId?:bigint, folderId?:number) => {
-    axios.post(API_URL+"/folders/"+folderId+"/cards/"+cardId, null,{headers:getHeaders()}).then(
-      (res)=>{
-          if (res.status==200){
-            displayNextCard()
-          }
-      }
-    )
-  }
+  const addCardintoFolder = (cardId?: bigint, folderId?: number) => {
+    axios.post(API_URL + "/folders/" + folderId + "/cards/" + cardId, null, {
+      headers: getHeaders(),
+    });
+
+    displayNextCard();
+  };
 
   return (
     <div className="">
@@ -63,9 +66,16 @@ export default function Accordion({ onElementClick, currentCardFolderId, current
                 {folder.name}
                 {}
               </div>
-              <div onClick={()=>addCardintoFolder(currentCardId, folder.id)} className="border border-white rounded ml-2 bg-[#0D1321] w-9 h-9 flex justify-center items-center">
+              <div
+                onClick={() => addCardintoFolder(currentCardId, folder.id)}
+                className="border border-white rounded ml-2 bg-[#0D1321] w-9 h-9 flex justify-center items-center"
+              >
                 <div className="place-self-center">
-                  {currentCardFolderId===folder.id?<FaCircle size={20} color="white"/>:""}
+                  {currentCardFolderId === folder.id ? (
+                    <FaCircle size={20} color="white" />
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
             </div>
