@@ -14,7 +14,7 @@ import FolderAccordeon from "./FolderAccordeon";
 
 export default function Card() {
   UseDisableScroll();
-
+  const [random, setRandom] = useState<boolean>(true);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [cardList, setCardList] =
@@ -23,7 +23,7 @@ export default function Card() {
     front?: string;
     back?: string;
     id?: bigint;
-    folderId?:number;
+    folderId?: number;
   }>({ front: "", back: "" });
   const cardId = searchParams.get("cardId");
 
@@ -40,6 +40,7 @@ export default function Card() {
   ) => {
     const newCardList = [...list];
     const card = newCardList.pop();
+    setRandom(Math.random() < 0.5);
     if (card) {
       setCardList(newCardList);
       setCardData(card);
@@ -77,6 +78,7 @@ export default function Card() {
 
   // Main function to show the next card or fetch new ones
   const showCard = () => {
+    setRandom(Math.random() < 0.5);
     if (!cardList) {
       fetchCards();
     } else if (cardList.length > 0) {
@@ -191,7 +193,7 @@ export default function Card() {
                   id={cardData.id}
                 />
               ) : (
-                <Flashcard front={cardData.front} back={cardData.back} />
+                <Flashcard front={random?cardData.front:cardData.back} back={random?cardData.back:cardData.front} />
               )}
             </div>
             <div className="mt-2">
@@ -214,7 +216,12 @@ export default function Card() {
       </div>
       <div className="absolute top-20 left-1/2 right-1/2 z-10">
         <div className="flex gap-4 justify-center">
-          <FolderAccordeon displayNextCard={()=>displayNextCard(cardList?cardList:[])} currentCardId={cardData.id} currentCardFolderId={cardData.folderId} onElementClick={cardsFromFolder} />
+          <FolderAccordeon
+            displayNextCard={() => displayNextCard(cardList ? cardList : [])}
+            currentCardId={cardData.id}
+            currentCardFolderId={cardData.folderId}
+            onElementClick={cardsFromFolder}
+          />
         </div>
       </div>
     </div>
