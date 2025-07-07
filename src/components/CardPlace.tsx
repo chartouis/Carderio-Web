@@ -53,7 +53,7 @@ export default function Card() {
     const localDateTime = { localDateTime: timestamp };
 
     axios
-      .post(API_URL + "/cards/request", localDateTime, {
+      .post(API_URL + "/folders/0/cards", localDateTime, {
         headers: getHeaders(),
       })
       .then((res) => {
