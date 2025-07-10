@@ -45,6 +45,13 @@ export default function Accordion({
     displayNextCard();
   };
 
+  const removeCardFromTheFolder = (cardId?: bigint) => {
+    axios.delete(API_URL + "/folders/card/" + cardId, {
+      headers: getHeaders(),
+    });
+    displayNextCard();
+  };
+
   return (
     <div className="">
       <div
@@ -56,6 +63,18 @@ export default function Accordion({
 
       {isExpanded && (
         <div className="mt-2   border-t border-white">
+          <div className="select-none flex justify-between">
+            <div
+              onClick={() => onElementClick(0)}
+              className="border border-white rounded w-45 p-1 mb-3 hover:bg-white text-white  hover:text-gray-800 bg-[#0D1321]"
+            >
+              Folderless
+            </div>
+            <div
+              onClick={() => removeCardFromTheFolder(currentCardId)}
+              className="border border-white rounded ml-2 hover:bg-white bg-[#0D1321] w-9 h-9 flex justify-center items-center"
+            ></div>
+          </div>
           {folders.map((folder, index) => (
             <div className="select-none flex justify-between">
               <div
@@ -68,7 +87,7 @@ export default function Accordion({
               </div>
               <div
                 onClick={() => addCardintoFolder(currentCardId, folder.id)}
-                className="border border-white rounded ml-2 bg-[#0D1321] w-9 h-9 flex justify-center items-center"
+                className="border border-white rounded ml-2 hover:bg-white bg-[#0D1321] w-9 h-9 flex justify-center items-center"
               >
                 <div className="place-self-center">
                   {currentCardFolderId === folder.id ? (
