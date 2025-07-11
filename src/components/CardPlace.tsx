@@ -64,7 +64,6 @@ export default function Card() {
         } else {
           setCardList([]);
           setCardData({ front: "No cards", back: "Add some!" });
-          navigate("/");
         }
       })
       .catch((error) => {
@@ -104,7 +103,6 @@ export default function Card() {
         } else {
           setCardList([]);
           setCardData({ front: "No cards", back: "Add some!" });
-          navigate("/");
         }
       })
       .catch((error) => {
