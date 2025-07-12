@@ -14,7 +14,7 @@ import FolderAccordeon from "./FolderAccordeon";
 
 export default function Card() {
   UseDisableScroll();
-  const [random, setRandom] = useState<boolean>(true);
+  //const [random, setRandom] = useState<boolean>(true);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [cardList, setCardList] =
@@ -40,7 +40,7 @@ export default function Card() {
   ) => {
     const newCardList = [...list];
     const card = newCardList.pop();
-    setRandom(Math.random() < 0.5);
+    //setRandom(Math.random() < 0.5);
     if (card) {
       setCardList(newCardList);
       setCardData(card);
@@ -77,7 +77,7 @@ export default function Card() {
 
   // Main function to show the next card or fetch new ones
   const showCard = () => {
-    setRandom(Math.random() < 0.5);
+    //setRandom(Math.random() < 0.5);
     if (!cardList) {
       fetchCards();
     } else if (cardList.length > 0) {
@@ -191,7 +191,11 @@ export default function Card() {
                   id={cardData.id}
                 />
               ) : (
-                <Flashcard front={random?cardData.front:cardData.back} back={random?cardData.back:cardData.front} />
+                // <Flashcard front={random?cardData.front:cardData.back} back={random?cardData.back:cardData.front} />
+                <Flashcard
+                  front={cardData.front}
+                  back={cardData.back}
+                />
               )}
             </div>
             <div className="mt-2">

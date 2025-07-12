@@ -27,6 +27,13 @@ export default function Create() {
   });
   const [folders, setFolders] = useState<Folder[]>([]);
 
+  const [checked, setChecked] = useState(false);
+
+  const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setChecked(e.target.checked);
+    console.log(e.target.checked ? "ON" : "OFF");
+  };
+
   useEffect(() => {
     axios.get(API_URL + "/folders", { headers: getHeaders() }).then((res) => {
       if (res.data) {
@@ -73,31 +80,51 @@ export default function Create() {
     }
   };
 
-  const submit = (e: React.FormEvent) => {
-    e.preventDefault();
+const createCard = async (data: typeof formData) => {
+  try {
+    const response = await axios.post(API_URL + "/cards", data, {
+      headers: getHeaders(),
+    });
 
-    if (formData.back !== "" || formData.front !== "") {
-      axios
-        .post(API_URL + "/cards", formData, { headers: getHeaders() })
-        .then((response) => {
-          if (response.status === 200) {
-            if (currentFolder.id != 0) {
-              const cardId = response.data.id ? response.data.id : 0;
-              axios.post(
-                API_URL + "/folders/" + currentFolder.id + "/cards/" + cardId,
-                null,
-                { headers: getHeaders() }
-              );
-            }
-            setStatus("Successfully Created");
-          }
-          //console.log(response.data);//to delete
-        });
-      setFormData({ front: "", back: "" });
-    } else {
-      setStatus("Write Something");
+    if (response.status === 200) {
+      const cardId = response.data.id ?? 0;
+
+      if (currentFolder.id !== 0) {
+        await axios.post(
+          `${API_URL}/folders/${currentFolder.id}/cards/${cardId}`,
+          null,
+          { headers: getHeaders() }
+        );
+      }
+
+      setStatus("Successfully Created");
     }
-  };
+  } catch (err) {
+    console.error(err);
+    setStatus("Error while creating card");
+  }
+};
+
+const submit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  if (formData.front !== "" || formData.back !== "") {
+    await createCard(formData);
+
+    if (checked) {
+      const swapped = {
+        front: formData.back,
+        back: formData.front,
+      };
+      await createCard(swapped);
+    }
+
+    setFormData({ front: "", back: "" });
+  } else {
+    setStatus("Write Something");
+  }
+};
+
 
   return (
     <div>
@@ -129,12 +156,25 @@ export default function Create() {
           </div>
           <span className="text-white">{status}</span>
           <br />
-          <button
-            type="submit"
-            className="bg-transparent border border-white text-white hover:bg-white hover:text-gray-800 py-2 px-4 rounded flex-grow"
-          >
-            Create
-          </button>
+          <div className="select-none flex mt-3 flex-row justify-between align-baseline gap-4 ">
+            <button
+              type="submit"
+              className="bg-transparent border border-white text-white hover:bg-white hover:text-gray-800 py-2 px-4 rounded flex-grow"
+            >
+              Create
+            </button>
+            <label className="switch w-7 relative group">
+              <input
+                type="checkbox"
+                onChange={handleCheckbox}
+                checked={checked}
+                className="w-full h-full text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+              ></input>
+              <span className="absolute left-0 mt-2 hidden group-hover:block bg-gray-700 text-white text-sm px-2 py-1 rounded">
+                Create two cards for both sides
+              </span>
+            </label>
+          </div>
         </form>
         <Link
           to="/create/generate"
