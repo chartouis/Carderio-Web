@@ -75,6 +75,18 @@ export default function Card() {
       });
   };
 
+  const deleteCard = () => {
+    const curId = cardData.id;
+    showCard();
+    axios
+      .delete(API_URL + "/cards/" + curId, { headers: getHeaders() })
+      .then((res) => {
+        if (res.status == 400 || !res) {
+          console.log("ERROR" + res);
+        }
+      });
+  };
+
   // Main function to show the next card or fetch new ones
   const showCard = () => {
     //setRandom(Math.random() < 0.5);
@@ -192,10 +204,7 @@ export default function Card() {
                 />
               ) : (
                 // <Flashcard front={random?cardData.front:cardData.back} back={random?cardData.back:cardData.front} />
-                <Flashcard
-                  front={cardData.front}
-                  back={cardData.back}
-                />
+                <Flashcard front={cardData.front} back={cardData.back} />
               )}
             </div>
             <div className="mt-2">
@@ -208,8 +217,8 @@ export default function Card() {
 
       <div className="absolute bottom-10 left-1/2 right-1/2 z-10">
         <div className="flex gap-4 justify-center">
-          <div onClick={showCard}>
-            <DeleteBtn id={cardData.id} update={showCard} />
+          <div>
+            <DeleteBtn id={cardData.id} update={deleteCard} />
           </div>
           <div>
             <ChangeButton cardData={cardData} />
