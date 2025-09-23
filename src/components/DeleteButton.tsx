@@ -10,15 +10,19 @@ interface props {
 
 export default function DeleteBtn({ id, update }: props) {
   const onDelete = () => {
-    axios.delete(API_URL + "/cards/" + id, { headers: getHeaders() }).then((response) => {
-      if (response.status === 200) {
+    axios
+      .delete(API_URL + "/cards/" + id, { headers: getHeaders() })
+      .then(() => {
         update();
-      }
-    });
+      });
   };
 
   return (
-    <button onClick={onDelete} type="button" className="border bg-[#0D1321] border-white text-white hover:bg-gray-400 hover:text-white py-2 px-4 rounded">
+    <button
+      onClick={onDelete}
+      type="button"
+      className="border bg-[#0D1321] border-white text-white hover:bg-gray-400 hover:text-white py-2 px-4 rounded"
+    >
       <div>
         <FaTrash size={20} color="white"></FaTrash>
       </div>
