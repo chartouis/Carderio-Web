@@ -10,11 +10,9 @@ interface props {
 
 export default function DeleteBtn({ id, update }: props) {
   const onDelete = () => {
-    axios
-      .delete(API_URL + "/cards/" + id, { headers: getHeaders() })
-      .then(() => {
-        update();
-      });
+    axios.delete(API_URL + "/cards/" + id, { headers: getHeaders() });
+
+    update();
   };
 
   return (
