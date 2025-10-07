@@ -14,7 +14,6 @@ import FolderAccordeon from "./FolderAccordeon";
 
 export default function Card() {
   UseDisableScroll();
-  //const [random, setRandom] = useState<boolean>(true);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [cardList, setCardList] =
@@ -27,27 +26,23 @@ export default function Card() {
   }>({ front: "", back: "" });
   const cardId = searchParams.get("cardId");
 
-  // Shuffle the cards randomly
   const shuffleCards = (
     cards: Array<{ front?: string; back?: string; id: bigint }>
   ) => {
     return cards.sort(() => Math.random() - 0.5);
   };
 
-  // Display the next card from the list
   const displayNextCard = (
     list: Array<{ front?: string; back?: string; id: bigint }>
   ) => {
     const newCardList = [...list];
     const card = newCardList.pop();
-    //setRandom(Math.random() < 0.5);
     if (card) {
       setCardList(newCardList);
       setCardData(card);
     }
   };
 
-  // Fetch cards from the API
   const fetchCards = async () => {
     const timestamp = new Date().toISOString();
     const localDateTime = { localDateTime: timestamp };
@@ -87,9 +82,7 @@ export default function Card() {
       });
   };
 
-  // Main function to show the next card or fetch new ones
   const showCard = () => {
-    //setRandom(Math.random() < 0.5);
     if (!cardList) {
       fetchCards();
     } else if (cardList.length > 0) {
@@ -168,7 +161,7 @@ export default function Card() {
       })
       .then((res) => {
         if (res.status === 200) {
-          // Handle success if needed
+          // ok
         } else {
           console.error("Request failed with status:", res.status);
         }
@@ -187,6 +180,45 @@ export default function Card() {
     }
   }
 
+  // --- Keyboard controls ---
+  useEffect(() => {
+    let activeDirection: "left" | "right" | null = null;
+    let spacePressed = false;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.code === "Space") {
+        spacePressed = true;
+        e.preventDefault();
+      }
+
+      if (spacePressed) {
+        if (e.code === "ArrowLeft" && activeDirection !== "left") {
+          activeDirection = "left";
+          forgot();
+        } else if (e.code === "ArrowRight" && activeDirection !== "right") {
+          activeDirection = "right";
+          remember();
+        }
+      }
+    };
+
+    const handleKeyUp = (e: KeyboardEvent) => {
+      if (e.code === "Space") {
+        spacePressed = false;
+        activeDirection = null;
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, []);
+  // --- end Keyboard controls ---
+
   return (
     <div className="flex flex-col gap-2">
       <div className="flex mt-5 justify-center">
@@ -203,7 +235,6 @@ export default function Card() {
                   id={cardData.id}
                 />
               ) : (
-                // <Flashcard front={random?cardData.front:cardData.back} back={random?cardData.back:cardData.front} />
                 <Flashcard front={cardData.front} back={cardData.back} />
               )}
             </div>
